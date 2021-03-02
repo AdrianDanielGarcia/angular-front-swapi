@@ -14,7 +14,7 @@ setTimeout( ()=> {
   if (splahElement) {
     splahElement.classList.add('fade-away');
   }
-}, 5000);
+}, 6000);
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
