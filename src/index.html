@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SwapiFront</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+  <!-- star wars splash screen, thanks to https://cssanimation.rocks/courses/animation-101/  -->
+  <style>
+    /* Animation properties */
+    .star {
+      animation: star 5s ease-out forwards;
+    }
+    .wars {
+      animation: wars 5s ease-out forwards;
+    }
+    .byline span {
+      animation: spin-letters 5s linear forwards;
+    }
+    .byline {
+      animation: move-byline 5s linear forwards;
+    }
+
+    /* Keyframes */
+    @keyframes star {
+      0% {
+        opacity: 0;
+        transform: scale(1.5) translateY(-0.75em);
+      }
+      20% {
+        opacity: 1;
+      }
+      89% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateZ(-1000em);
+      }
+    }
+
+    @keyframes wars {
+      0% {
+        opacity: 0;
+        transform: scale(1.5) translateY(0.5em);
+      }
+      20% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateZ(-1000em);
+      }
+    }
+
+    @keyframes spin-letters {
+      0%, 10% {
+        opacity: 0;
+        transform: rotateY(90deg);
+      }
+      30% {
+        opacity: 1;
+      }
+      70%, 86% {
+        transform: rotateY(0);
+        opacity: 1;
+      }
+      95%, 100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes move-byline {
+      0% {
+        transform: translateZ(5em);
+      }
+      100% {
+        transform: translateZ(0);
+      }
+    }
+
+    /* Make the 3D work on the container */
+    .starwars-demo {
+      perspective: 800px;
+      transform-style: preserve3d;
+    }
+
+    /* General styles and layout */
+    .starwars-demo {
+      height: 17em;
+      left: 50%;
+      position: absolute;
+      top: 53%;
+      transform: translate(-50%, -50%);
+      width: 34em;
+    }
+
+    .splash-overlay {
+      position: fixed;
+      background-color: black; /* #202124; */
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .fade-away {
+      display: none;
+    }
+
+    .byline span {
+      display: inline-block;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    .star, .wars, .byline {
+      position: absolute;
+    }
+
+    .star {
+      top: -0.75em;
+    }
+
+    .wars {
+      bottom: -0.5em;
+    }
+
+    .byline {
+      color: #e8eaed;
+      font-size: 2.25em;
+      left: -3.3em;
+      letter-spacing: 0.4em;
+      right: -2em;
+      text-align: center;
+      text-transform: uppercase;
+      top: 29%;
+      width: 800px;
+    }
+
+    /*** Media queries for adjusting to different screen sizes ***/
+
+    @media only screen and (max-width: 600px) {
+      .starwars-demo {
+        font-size: 10px;
+      }
+    }
+
+    @media only screen and (max-width: 480px) {
+      .starwars-demo {
+        font-size: 7px;
+      }
+    }
+
+
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="mat-typography">
+
+  <!-- <div class="splash-overlay">
+    <div class="starwars-demo">
+      <img alt="Star" class="star" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHdpZHRoPSIzNjBweCIgaGVpZ2h0PSI4MHB4IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHN0eWxlPSJmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MS40MTQyMTsiPgogICAgPGc+CiAgICAgICAgPGcgaWQ9IkxheWVyMSI+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTEwOC4zNzYsMUw2MC43NzY1LDFDNTAuOTM2MiwxIDQ1LjA4NTQsNS43NzYxNyA0My4yMzEyLDE1LjMzNTVDNDEuMzc2OSwyNC44ODc4IDQ2LjY1MTcsMzUuMzc0MiA1OS4wNjI3LDQ2Ljc4MDhDNjYuNTg1MSw1Mi43MDE4IDY1LjMwNjgsNTUuNTE4MyA1NS4yMTM3LDU1LjIzMDRMMCw1NS4yMzA0TDAsNzguMjI2MUw4MC4wMjg2LDc4LjIyNjFDOTEuMTU0Miw3Ni4zNzE4IDk2LjgyMjMsNzAuNjY4NiA5Ny4wMzMxLDYxLjExNjNDOTcuMjUwOCw1MS41NTY5IDkxLjU4MjYsNDEuNzE2NyA4MC4wMjg2LDMxLjU4ODRDNzMuNTczNywyNi4yNDM0IDc0LjkyOTMsMjMuNzE0OCA4NC4wOTUzLDIzLjk5NThMMTIzLjY1MywyMy45OTU4TDEyMy42NTMsNzguMjI2MUwxNDguNzkxLDc4LjIyNjFMMTQ4Ljc5MSwyMy45OTU4TDE3My4yOSwyMy45OTU4TDE3My4yOSwxTDEwOC4zNzYsMVoiIHN0eWxlPSJmaWxsOmJsYWNrO3N0cm9rZS13aWR0aDoycHg7c3Ryb2tlOnJnYigyNTMsMjQyLDgzKTsiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8Zz4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xNjIuMTg1LDc4LjIyNjFMMTg3LjU5LDFMMjI1Ljk0LDFMMjUxLjc3Myw3OC4yMjYxTDIyMi41NjgsNzguMjI2MUwyMTcuNzAxLDY2LjQzMzJMMTk0Ljc1NCw2Ni40MzMyTDE4OS44ODcsNzguMjI2MUwxNjIuMTg1LDc4LjIyNjFaTTIwNi44NDIsMjAuMjI0TDE5Ny44OCw0OC43MDUzTDIxNC45NTUsNDguNzA1M0wyMDYuODQyLDIwLjIyNFoiIHN0eWxlPSJmaWxsOmJsYWNrO3N0cm9rZS13aWR0aDoycHg7c3Ryb2tlOnJnYigyNTMsMjQyLDgzKTsiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8Zz4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0yNTkuMDU3LDc4LjIyNjFMMjU5LjA1NywxTDMwOS4zMjYsMUMzMTUuNTM1LDEuNTY4OTMgMzIwLjYzNCwzLjIxMjQ5IDMyNC42MjQsNS45MTY2NEMzMjguNjIsOC42Mjc4MSAzMzEuNTQyLDEyLjI2NjEgMzMzLjM5NiwxNi44MzE1QzMzNC44MjIsMjMuNjc5NyAzMzQuODkyLDI4Ljk1NDUgMzMzLjYwNywzMi42NjMxQzMzMi4zMjksMzYuMzcxNiAzMzAuMDgxLDM5LjQ2OTEgMzI2Ljg3MSw0MS45Njk1QzMyMy42NjEsNDQuNDYzIDMxOC45NTQsNDcuMjYyMSAzMTIuOTY5LDQ4LjY4OEMzMTIuOTY5LDQ4LjY4OCAzMTMuMzM1LDUxLjU1NTIgMzE2LjIyNCw1Mi43NDE5QzMyNC44NjYsNTYuMjkwNiAzNTYuNTgyLDU1LjIzMDQgMzU2LjU4Miw1NS4yMzA0TDM1Ni41ODIsNzguMjI2MUMzNTYuNTgyLDc4LjIyNjEgMzE1LjQwMSw3OS43MDE1IDMxMS40NjgsNzguMjI2MUMzMDUuMjkyLDc1LjkwOTQgMjg2Ljk3Niw1Mi43MTU5IDI4Ni45NzYsNTIuNzE1OUwyODYuOTc2LDc4LjIyNjFMMjU5LjA1Nyw3OC4yMjYxWk0yODYuOTc2LDIwLjI1MjFMMjg2Ljk3NiwzNC40ODIyTDMwNi40MzksMzQuNDgyMkMzMDcuNDc5LDM0LjQ4MjIgMzA4LjYwMiwzNC4wOTU5IDMwOS44MSwzMy4zMzAzQzMxMS4wMTgsMzIuNTY0NyAzMTEuNjY1LDMwLjYyNjIgMzExLjczNSwyNy41Mjg3QzMxMS41NTksMjQuNTcxNyAzMTAuODM2LDIyLjYxOTEgMzA5LjU3MiwyMS42NzA5QzMwOC4zMDcsMjAuNzI5NyAzMDcuMjQsMjAuMjUyMSAzMDYuMzksMjAuMjUyMUwyODYuOTc2LDIwLjI1MjFaIiBzdHlsZT0iZmlsbDpibGFjaztzdHJva2Utd2lkdGg6MnB4O3N0cm9rZTpyZ2IoMjUzLDI0Miw4Myk7Ii8+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=">
+      <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHdpZHRoPSIzNjBweCIgaGVpZ2h0PSI4NHB4IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHN0eWxlPSJmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MS40MTQyMTsiPgogICAgPGc+CiAgICAgICAgPGcgaWQ9IkxheWVyMSI+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTU3Ljg0ODcsNDcuNTY2Mkw0OS40OTgsODEuMTcxTDI5LjI1ODIsODEuMTcxTDIuMTc3MTgsMS44ODIzMUwyOC42ODcyLDEuODgyMzFMMzguODU0MSwyNi40OTU3TDQ0LjY4LDEuODgyMzFMNzIuNDc4OCwxLjg4MjMxTDgwLjQxMywyNi40OTU3TDg3Ljc2ODUsMS44ODIzMUwxMTMuNTc4LDEuODgyMzFMODcuMDM2Myw4MS4xNzFMNjcuODk0MSw4MS4xNzFMNTcuODQ4Nyw0Ny41NjYyWiIgc3R5bGU9ImZpbGw6YmxhY2s7c3Ryb2tlLXdpZHRoOjJweDtzdHJva2U6cmdiKDI1MywyNDIsODMpOyIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTEwMS43MzcsODEuMTcxTDEyNy44MiwxLjg4MjMxTDE2Ny4xODcsMS44ODIzMUwxOTMuNzEsODEuMTcxTDE2My43MjYsODEuMTcxTDE1OC43MzUsNjYuODkyNUwxMzUuMTc2LDY2Ljg5MjVMMTMwLjE3OCw4MS4xNzFMMTAxLjczNyw4MS4xNzFaTTE0Ny41ODcsMTkuNDQ5MUwxMzYuMjIyLDUwLjg2MTdMMTU4LjA3Miw1MC44NjE3TDE0Ny41ODcsMTkuNDQ5MVoiIHN0eWxlPSJmaWxsOmJsYWNrO3N0cm9rZS13aWR0aDoycHg7c3Ryb2tlOnJnYigyNTMsMjQyLDgzKTsiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8Zz4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0zMjYuOTY1LDI1LjQ5MjJMMzU2LjU4MiwyNS4zNjk2TDM1Ni41ODIsMS43NTk3MkwzMDMuMDIzLDEuODgyMzFDMjkyLjkyLDEuODgyMzEgMjg2LjkyLDYuNzg2MDMgMjg1LjAwOSwxNi41OTM0QzI4My4xMTIsMjYuNDA4MSAyODguNTI4LDM3LjE2NzQgMzAxLjI3MSw0OC44ODU4QzMwOC45OTQsNTQuOTY1IDMwNy42NzQsNTcuODU2NyAyOTcuMzEyLDU3LjU2MTFMMjYwLjE5NSw1Ny41NjExTDI1NC4yNiw0OS45ODJDMjYwLjQxMSw0OC41MTgxIDI2NS4xMzUsNDYuNTA2MSAyNjguNDMsNDMuOTQ2MUMyNzEuNzI2LDQxLjM3ODggMjc0LjAyNiwzOC4xOTg2IDI3NS4zNDYsMzQuMzkxQzI3Ni42NjUsMzAuNTgzNSAyNzYuNTkzLDI1LjE2MDUgMjc1LjEyOSwxOC4xMzY3QzI3My4yMjYsMTMuNDQ5MyAyNzAuMjI2LDkuNzEzODMgMjY2LjEyMyw2LjkzMDI1QzI2Mi4wMjYsNC4xNDY2NyAyNTYuNzkxLDIuNDY2NDQgMjUwLjQxNiwxLjg4MjMxTDE5OC44MDUsMS44ODIzMUwxOTguODA1LDgxLjE3MUwyMjcuNDcsODEuMTcxTDIyNy40Nyw1NC45Nzk0TDI1Mi42MTYsODEuMTcxTDMyMi43ODksODEuMTcxQzMzNC4yMTIsNzkuMjY3MiAzNDAuMDMyLDczLjQxMTYgMzQwLjI1NSw2My41OTdDMzQwLjQ3MSw1My43ODk2IDMzNC42NTIsNDMuNjg2NCAzMjIuNzg5LDMzLjI4NzdDMzE2LjE2OSwyNy43OTk5IDMxNy41NjEsMjUuMTk2NiAzMjYuOTY1LDI1LjQ5MjJaTTI1MC45MTQsMzUuMDc2MUMyNDkuNjY2LDM1Ljg2MjIgMjQ4LjUyLDM2LjI1ODggMjQ3LjQ1MiwzNi4yNTg4TDIyNy40NywzNi4yNTg4TDIyNy40NywyMS42NDg2TDI0Ny40MDIsMjEuNjQ4NkMyNDguMjgyLDIxLjY0ODYgMjQ5LjM3MSwyMi4xMzE4IDI1MC42NjEsMjMuMTA1M0MyNTEuOTY3LDI0LjA3MTYgMjUyLjcwOSwyNi4wNzY0IDI1Mi44OSwyOS4xMTk1QzI1Mi44MTgsMzIuMjk5OCAyNTIuMTYxLDM0LjI5MDEgMjUwLjkxNCwzNS4wNzYxWiIgc3R5bGU9ImZpbGw6YmxhY2s7c3Ryb2tlLXdpZHRoOjJweDtzdHJva2U6cmdiKDI1MywyNDIsODMpOyIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K" alt="Wars" class="wars">
+      <h2 class="byline" id="byline">Star Wars API</h2>
+    </div>
+  </div> -->
+
+  <app-root></app-root>
+  <script>
+
+    var byline = document.getElementById('byline');   // Find the H2
+    bylineText = byline.innerHTML;                    // Get the content of the H2
+    bylineArr = bylineText.split('');                 // Split content into array
+    byline.innerHTML = '';                            // Empty current content
+
+    var span;         // Create variables to create elements
+    var letter;
+
+    // for(i=0;i<bylineArr.length;i++){                  // Loop for every letter
+    bylineArr.forEach(itemLetter => {
+
+      span = document.createElement("span");          // Create a <span> element
+      letter = document.createTextNode(itemLetter); // Create the letter
+      if(itemLetter === ' ') {                       // If the letter is a space...
+        byline.appendChild(letter);         // ...Add the space without a span
+      } else {
+        span.appendChild(letter);           // Add the letter to the span
+        byline.appendChild(span);           // Add the span to the h2
+      }
+    });
+
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<form
+  [formGroup]="toolboxForm"
+  class="toolbox-form"
+>
+  <div class="round-outline">
+    <mat-icon class="search-icon">search</mat-icon>
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input
+        matInput
+        title="Filter planets"
+        formControlName="search"
+        maxlength="50"
+        type="search"
+      >
+    </mat-form-field>
+  </div>
+
+  <div class="round-outline">
+    <mat-form-field>
+      <mat-label>Sort by</mat-label>
+      <mat-select title="Select the sort order" formControlName="selectedSortOrder">
+        <mat-option *ngFor="let options of sortOrderOptions$ | async" [value]="options">
+          {{options}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <mat-checkbox
+    formControlName="wookiee"
+    class="example-margin"
+    title="// TODO: implement Wookiee queries"
+  >Wookiee language</mat-checkbox>
+</form>

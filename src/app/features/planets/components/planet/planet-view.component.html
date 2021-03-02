@@ -1,0 +1,64 @@
+<div class="title" [class.highlight]="'Name' === selectedSortOption">
+  {{ planet.name }}
+</div>
+<div class="columns">
+  <div class="column-large">
+    <label [class.highlight]="'Terrain' === selectedSortOption">terrain</label>
+    {{ planet.terrain }}<br />
+    <label [class.highlight]="'Climate' === selectedSortOption">climate</label>
+    {{ planet.climate }}<br />
+    <label [class.highlight]="'Population' === selectedSortOption"
+      >population</label
+    >
+    {{ planet.population }}
+  </div>
+  <div class="column">
+    <label [class.highlight]="'Diameter' === selectedSortOption"
+      >diameter</label
+    >
+    {{ planet.diameter }} <span *ngIf="planet.diameter !== 'unknown'">km</span
+    ><br />
+    <label [class.highlight]="'Gravity' === selectedSortOption">gravity</label>
+    {{ planet.gravity }}<br />
+    <label [class.highlight]="'Orbital Period' === selectedSortOption"
+      >orbital period</label
+    >
+    {{ planet.orbital_period }}
+    <span *ngIf="planet.orbital_period !== 'unknown'">days</span><br />
+  </div>
+  <div class="column">
+    <label [class.highlight]="'Rotation Period' === selectedSortOption"
+      >rotation period</label
+    >
+    {{ planet.rotation_period }}
+    <span *ngIf="planet.rotation_period !== 'unknown'">hrs</span> <br />
+    <label [class.highlight]="'Surface Water' === selectedSortOption"
+      >surface water</label
+    >
+    {{ planet.surface_water
+    }}<span *ngIf="planet.surface_water !== 'unknown'">%</span><br />
+  </div>
+</div>
+
+<br />
+
+<mat-accordion *ngIf="planet.films.length > 0">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Films</mat-panel-title>
+    </mat-expansion-panel-header>
+    <span class="film" *ngFor="let film of planet.films">
+      {{film.name}}
+    </span>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-accordion *ngIf="planet.residents.length > 0">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Residents</mat-panel-title>
+    </mat-expansion-panel-header>
+    <span class="resident" *ngFor="let resident of planet.residents">
+      {{resident.name}}
+    </span>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  padding-top: 16px;
+}
+
+.menu-item, .menu-item:visited {
+  display: block;
+  padding: 16px;
+  cursor: pointer;
+  color: inherit;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 2px;
+
+  &.active {
+    background-color: #000000;
+    color:#fdba00;
+  }
+
+  &:hover {
+    color: rgb(202, 185, 85);
+    background-color: darken($color: #5f6368, $amount: 20);
+  }
+}

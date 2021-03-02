@@ -1,0 +1,24 @@
+:host {
+  flex-grow: 2;
+}
+
+.toolbox-form {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  transform: translateY(-4px);
+
+  .round-outline {
+    // border: 1px solid #5f6368;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    margin-right: 32px;
+
+    .search-icon {
+      margin-right: 8px;
+    }
+  }
+}
