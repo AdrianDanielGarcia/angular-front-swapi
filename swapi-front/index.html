@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SwapiFront</title>
+  <base href="https://adriandanielgarcia.github.io/angular-front-swapi/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <style type="text/css">@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu72xKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu5mxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu7mxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4WxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0370-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu7WxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu7GxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}</style>
+
+  <!-- star wars splash screen, thanks to https://cssanimation.rocks/courses/animation-101/  -->
+  <style>
+    /* Animation properties */
+    .star {
+      animation: star 5s ease-out forwards;
+    }
+    .wars {
+      animation: wars 5s ease-out forwards;
+    }
+    .byline span {
+      animation: spin-letters 5s forwards;
+    }
+    .byline {
+      animation: move-byline 5s forwards;
+    }
+
+    /* Keyframes */
+    @keyframes star {
+      0% {
+        opacity: 0;
+        transform: scale(1.5) translateY(-0.75em);
+      }
+      20% {
+        opacity: 1;
+      }
+      89% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateZ(-1000em);
+      }
+    }
+
+    @keyframes wars {
+      0% {
+        opacity: 0;
+        transform: scale(1.5) translateY(0.5em);
+      }
+      20% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateZ(-1000em);
+      }
+    }
+
+    @keyframes spin-letters {
+      0%, 10% {
+        opacity: 0;
+        transform: rotateY(90deg);
+      }
+      30% {
+        opacity: 1;
+      }
+      70%, 86% {
+        transform: rotateY(0);
+        opacity: 1;
+      }
+      95%, 100% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes move-byline {
+      0% {
+        transform: translateZ(5em);
+      }
+      100% {
+        transform: translateZ(0);
+      }
+    }
+
+    /* Make the 3D work on the container */
+    .starwars-demo {
+      perspective: 800px;
+      transform-style: preserve3d;
+    }
+
+    /* General styles and layout */
+    .starwars-demo {
+      height: 17em;
+      left: 50%;
+      position: absolute;
+      top: 53%;
+      transform: translate(-50%, -50%);
+      width: 34em;
+    }
+
+    .splash-overlay {
+      position: fixed;
+      background-color: black;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .fade-away {
+      display: none;
+    }
+
+    .byline span {
+      display: inline-block;
+    }
+
+    img {
+      width: 100%;
+    }
+
+    .star, .wars, .byline {
+      position: absolute;
+    }
+
+    .star {
+      top: -0.75em;
+    }
+
+    .wars {
+      bottom: -0.5em;
+    }
+
+    .byline {
+      color: #e8eaed;
+      font-size: 3.25em !important;
+      left: -3.3em;
+      letter-spacing: 0.4em !important;
+      font-weight: bold;
+      right: -2em;
+      text-align: center;
+      text-transform: uppercase;
+      top: 41%;
+      width: 800px;
+    }
+
+    /*** Media queries for adjusting to different screen sizes ***/
+
+    @media only screen and (max-width: 600px) {
+      .starwars-demo {
+        font-size: 10px;
+      }
+    }
+
+    @media only screen and (max-width: 480px) {
+      .starwars-demo {
+        font-size: 7px;
+      }
+    }
+
+
+  </style>
+  <style type="text/css">@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fCRc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fABc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fCBc4AMP6lbBP.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBxc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0370-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fCxc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fChc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:300;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmSU5fBBc4AMP6lQ.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu72xKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu5mxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu7mxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4WxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0370-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu7WxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu7GxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fCRc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fABc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fCBc4AMP6lbBP.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBxc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0370-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fCxc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fChc4AMP6lbBP.woff2) format('woff2');unicode-range:U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:500;font-display:swap;src:url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4AMP6lQ.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}</style>
+  <style type="text/css">@font-face{font-family:'Material Icons';font-style:normal;font-weight:400;src:url(https://fonts.gstatic.com/s/materialicons/v78/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');}.material-icons{font-family:'Material Icons';font-weight:normal;font-style:normal;font-size:24px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-feature-settings:'liga';-webkit-font-smoothing:antialiased;}</style>
+<link rel="stylesheet" href="styles.a10fa4a5beab4da1382e.css"></head>
+<body class="mat-typography">
+
+  <div class="splash-overlay">
+    <div class="starwars-demo">
+      <img alt="Star" class="star" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHdpZHRoPSIzNjBweCIgaGVpZ2h0PSI4MHB4IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHN0eWxlPSJmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MS40MTQyMTsiPgogICAgPGc+CiAgICAgICAgPGcgaWQ9IkxheWVyMSI+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTEwOC4zNzYsMUw2MC43NzY1LDFDNTAuOTM2MiwxIDQ1LjA4NTQsNS43NzYxNyA0My4yMzEyLDE1LjMzNTVDNDEuMzc2OSwyNC44ODc4IDQ2LjY1MTcsMzUuMzc0MiA1OS4wNjI3LDQ2Ljc4MDhDNjYuNTg1MSw1Mi43MDE4IDY1LjMwNjgsNTUuNTE4MyA1NS4yMTM3LDU1LjIzMDRMMCw1NS4yMzA0TDAsNzguMjI2MUw4MC4wMjg2LDc4LjIyNjFDOTEuMTU0Miw3Ni4zNzE4IDk2LjgyMjMsNzAuNjY4NiA5Ny4wMzMxLDYxLjExNjNDOTcuMjUwOCw1MS41NTY5IDkxLjU4MjYsNDEuNzE2NyA4MC4wMjg2LDMxLjU4ODRDNzMuNTczNywyNi4yNDM0IDc0LjkyOTMsMjMuNzE0OCA4NC4wOTUzLDIzLjk5NThMMTIzLjY1MywyMy45OTU4TDEyMy42NTMsNzguMjI2MUwxNDguNzkxLDc4LjIyNjFMMTQ4Ljc5MSwyMy45OTU4TDE3My4yOSwyMy45OTU4TDE3My4yOSwxTDEwOC4zNzYsMVoiIHN0eWxlPSJmaWxsOmJsYWNrO3N0cm9rZS13aWR0aDoycHg7c3Ryb2tlOnJnYigyNTMsMjQyLDgzKTsiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8Zz4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xNjIuMTg1LDc4LjIyNjFMMTg3LjU5LDFMMjI1Ljk0LDFMMjUxLjc3Myw3OC4yMjYxTDIyMi41NjgsNzguMjI2MUwyMTcuNzAxLDY2LjQzMzJMMTk0Ljc1NCw2Ni40MzMyTDE4OS44ODcsNzguMjI2MUwxNjIuMTg1LDc4LjIyNjFaTTIwNi44NDIsMjAuMjI0TDE5Ny44OCw0OC43MDUzTDIxNC45NTUsNDguNzA1M0wyMDYuODQyLDIwLjIyNFoiIHN0eWxlPSJmaWxsOmJsYWNrO3N0cm9rZS13aWR0aDoycHg7c3Ryb2tlOnJnYigyNTMsMjQyLDgzKTsiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8Zz4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0yNTkuMDU3LDc4LjIyNjFMMjU5LjA1NywxTDMwOS4zMjYsMUMzMTUuNTM1LDEuNTY4OTMgMzIwLjYzNCwzLjIxMjQ5IDMyNC42MjQsNS45MTY2NEMzMjguNjIsOC42Mjc4MSAzMzEuNTQyLDEyLjI2NjEgMzMzLjM5NiwxNi44MzE1QzMzNC44MjIsMjMuNjc5NyAzMzQuODkyLDI4Ljk1NDUgMzMzLjYwNywzMi42NjMxQzMzMi4zMjksMzYuMzcxNiAzMzAuMDgxLDM5LjQ2OTEgMzI2Ljg3MSw0MS45Njk1QzMyMy42NjEsNDQuNDYzIDMxOC45NTQsNDcuMjYyMSAzMTIuOTY5LDQ4LjY4OEMzMTIuOTY5LDQ4LjY4OCAzMTMuMzM1LDUxLjU1NTIgMzE2LjIyNCw1Mi43NDE5QzMyNC44NjYsNTYuMjkwNiAzNTYuNTgyLDU1LjIzMDQgMzU2LjU4Miw1NS4yMzA0TDM1Ni41ODIsNzguMjI2MUMzNTYuNTgyLDc4LjIyNjEgMzE1LjQwMSw3OS43MDE1IDMxMS40NjgsNzguMjI2MUMzMDUuMjkyLDc1LjkwOTQgMjg2Ljk3Niw1Mi43MTU5IDI4Ni45NzYsNTIuNzE1OUwyODYuOTc2LDc4LjIyNjFMMjU5LjA1Nyw3OC4yMjYxWk0yODYuOTc2LDIwLjI1MjFMMjg2Ljk3NiwzNC40ODIyTDMwNi40MzksMzQuNDgyMkMzMDcuNDc5LDM0LjQ4MjIgMzA4LjYwMiwzNC4wOTU5IDMwOS44MSwzMy4zMzAzQzMxMS4wMTgsMzIuNTY0NyAzMTEuNjY1LDMwLjYyNjIgMzExLjczNSwyNy41Mjg3QzMxMS41NTksMjQuNTcxNyAzMTAuODM2LDIyLjYxOTEgMzA5LjU3MiwyMS42NzA5QzMwOC4zMDcsMjAuNzI5NyAzMDcuMjQsMjAuMjUyMSAzMDYuMzksMjAuMjUyMUwyODYuOTc2LDIwLjI1MjFaIiBzdHlsZT0iZmlsbDpibGFjaztzdHJva2Utd2lkdGg6MnB4O3N0cm9rZTpyZ2IoMjUzLDI0Miw4Myk7Ii8+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPgo=">
+      <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHdpZHRoPSIzNjBweCIgaGVpZ2h0PSI4NHB4IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHN0eWxlPSJmaWxsLXJ1bGU6ZXZlbm9kZDtjbGlwLXJ1bGU6ZXZlbm9kZDtzdHJva2UtbGluZWpvaW46cm91bmQ7c3Ryb2tlLW1pdGVybGltaXQ6MS40MTQyMTsiPgogICAgPGc+CiAgICAgICAgPGcgaWQ9IkxheWVyMSI+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTU3Ljg0ODcsNDcuNTY2Mkw0OS40OTgsODEuMTcxTDI5LjI1ODIsODEuMTcxTDIuMTc3MTgsMS44ODIzMUwyOC42ODcyLDEuODgyMzFMMzguODU0MSwyNi40OTU3TDQ0LjY4LDEuODgyMzFMNzIuNDc4OCwxLjg4MjMxTDgwLjQxMywyNi40OTU3TDg3Ljc2ODUsMS44ODIzMUwxMTMuNTc4LDEuODgyMzFMODcuMDM2Myw4MS4xNzFMNjcuODk0MSw4MS4xNzFMNTcuODQ4Nyw0Ny41NjYyWiIgc3R5bGU9ImZpbGw6YmxhY2s7c3Ryb2tlLXdpZHRoOjJweDtzdHJva2U6cmdiKDI1MywyNDIsODMpOyIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTEwMS43MzcsODEuMTcxTDEyNy44MiwxLjg4MjMxTDE2Ny4xODcsMS44ODIzMUwxOTMuNzEsODEuMTcxTDE2My43MjYsODEuMTcxTDE1OC43MzUsNjYuODkyNUwxMzUuMTc2LDY2Ljg5MjVMMTMwLjE3OCw4MS4xNzFMMTAxLjczNyw4MS4xNzFaTTE0Ny41ODcsMTkuNDQ5MUwxMzYuMjIyLDUwLjg2MTdMMTU4LjA3Miw1MC44NjE3TDE0Ny41ODcsMTkuNDQ5MVoiIHN0eWxlPSJmaWxsOmJsYWNrO3N0cm9rZS13aWR0aDoycHg7c3Ryb2tlOnJnYigyNTMsMjQyLDgzKTsiLz4KICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8Zz4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0zMjYuOTY1LDI1LjQ5MjJMMzU2LjU4MiwyNS4zNjk2TDM1Ni41ODIsMS43NTk3MkwzMDMuMDIzLDEuODgyMzFDMjkyLjkyLDEuODgyMzEgMjg2LjkyLDYuNzg2MDMgMjg1LjAwOSwxNi41OTM0QzI4My4xMTIsMjYuNDA4MSAyODguNTI4LDM3LjE2NzQgMzAxLjI3MSw0OC44ODU4QzMwOC45OTQsNTQuOTY1IDMwNy42NzQsNTcuODU2NyAyOTcuMzEyLDU3LjU2MTFMMjYwLjE5NSw1Ny41NjExTDI1NC4yNiw0OS45ODJDMjYwLjQxMSw0OC41MTgxIDI2NS4xMzUsNDYuNTA2MSAyNjguNDMsNDMuOTQ2MUMyNzEuNzI2LDQxLjM3ODggMjc0LjAyNiwzOC4xOTg2IDI3NS4zNDYsMzQuMzkxQzI3Ni42NjUsMzAuNTgzNSAyNzYuNTkzLDI1LjE2MDUgMjc1LjEyOSwxOC4xMzY3QzI3My4yMjYsMTMuNDQ5MyAyNzAuMjI2LDkuNzEzODMgMjY2LjEyMyw2LjkzMDI1QzI2Mi4wMjYsNC4xNDY2NyAyNTYuNzkxLDIuNDY2NDQgMjUwLjQxNiwxLjg4MjMxTDE5OC44MDUsMS44ODIzMUwxOTguODA1LDgxLjE3MUwyMjcuNDcsODEuMTcxTDIyNy40Nyw1NC45Nzk0TDI1Mi42MTYsODEuMTcxTDMyMi43ODksODEuMTcxQzMzNC4yMTIsNzkuMjY3MiAzNDAuMDMyLDczLjQxMTYgMzQwLjI1NSw2My41OTdDMzQwLjQ3MSw1My43ODk2IDMzNC42NTIsNDMuNjg2NCAzMjIuNzg5LDMzLjI4NzdDMzE2LjE2OSwyNy43OTk5IDMxNy41NjEsMjUuMTk2NiAzMjYuOTY1LDI1LjQ5MjJaTTI1MC45MTQsMzUuMDc2MUMyNDkuNjY2LDM1Ljg2MjIgMjQ4LjUyLDM2LjI1ODggMjQ3LjQ1MiwzNi4yNTg4TDIyNy40NywzNi4yNTg4TDIyNy40NywyMS42NDg2TDI0Ny40MDIsMjEuNjQ4NkMyNDguMjgyLDIxLjY0ODYgMjQ5LjM3MSwyMi4xMzE4IDI1MC42NjEsMjMuMTA1M0MyNTEuOTY3LDI0LjA3MTYgMjUyLjcwOSwyNi4wNzY0IDI1Mi44OSwyOS4xMTk1QzI1Mi44MTgsMzIuMjk5OCAyNTIuMTYxLDM0LjI5MDEgMjUwLjkxNCwzNS4wNzYxWiIgc3R5bGU9ImZpbGw6YmxhY2s7c3Ryb2tlLXdpZHRoOjJweDtzdHJva2U6cmdiKDI1MywyNDIsODMpOyIvPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K" alt="Wars" class="wars">
+      <h2 class="byline" id="byline">Star Wars API</h2>
+    </div>
+  </div>
+
+  <app-root></app-root>
+  <script>
+
+    var byline = document.getElementById('byline');   // Find the H2
+    bylineText = byline.innerHTML;                    // Get the content of the H2
+    bylineArr = bylineText.split('');                 // Split content into array
+    byline.innerHTML = '';                            // Empty current content
+
+    var span;         // Create variables to create elements
+    var letter;
+
+    // for(i=0;i<bylineArr.length;i++){                  // Loop for every letter
+    bylineArr.forEach(itemLetter => {
+
+      span = document.createElement("span");          // Create a <span> element
+      letter = document.createTextNode(itemLetter); // Create the letter
+      if(itemLetter === ' ') {                       // If the letter is a space...
+        byline.appendChild(letter);         // ...Add the space without a span
+      } else {
+        span.appendChild(letter);           // Add the letter to the span
+        byline.appendChild(span);           // Add the span to the h2
+      }
+    });
+
+
+
+  </script>
+<script src="runtime.02a4cd613e73fa2d5ac8.js" defer=""></script><script src="polyfills.1f48151810f71fa38e45.js" defer=""></script><script src="main.53c27a776124d675e365.js" defer=""></script></body>
+</html>
